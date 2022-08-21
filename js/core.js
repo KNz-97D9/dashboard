@@ -1,14 +1,14 @@
 const URL_ARRAY = {
-  base_html: 'https://cdn.jsdelivr.net/gh/KNz-97D9/dashboard@v1.0.2/base.html'
+  base_html: 'https://cdn.jsdelivr.net/gh/KNz-97D9/dashboard@v1.0.3/base.html'
 };
 
 /**
  * 
  */
-function loadDashboard(url = '', parentElement = document.body) {
+async function loadDashboard(url = '', parentElement = document.body) {
 
   // 
-  var nodes = fetch(url)
+  var nodes = await fetch(url)
     .then(response => response.text())
     .then(data => {
       return new DOMParser().parseFromString(data, 'text/html');
