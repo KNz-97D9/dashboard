@@ -1,25 +1,30 @@
 const URL_ARRAY = {
-  base_html: 'https://cdn.jsdelivr.net/gh/KNz-97D9/dashboard@v1.0.3/base.html'
+  base_html: 'https://cdn.jsdelivr.net/gh/KNz-97D9/dashboard@v1.0.4/base.html'
 };
 
 /**
  * 
  */
-async function loadDashboard(url = '', parentElement = document.body) {
+function loadDashboard() {
 
-  // 
-  var nodes = await fetch(url)
+  // base.htmlを先頭に追加
+  prependHTML(URL_ARRAY['base_html'], '#dashboardWrapper');
+}
+
+/**
+ * 
+ */
+function prependHTML(url = '', targetSelector = '') {
+
+  // 取得したURLの指定したセレクターに一致する要素をbodyの先頭に追加
+  fetch(url)
     .then(response => response.text())
-    .then(data => {
-      return new DOMParser().parseFromString(data, 'text/html');
-    });
-  
-  // ノードを指定した親要素の先頭に挿入
-  parentElement.prepend(nodes);
+    .then(data => new DOMParser().parseFromString(data, 'text/html'))
+    .then(object => document.body.prepend(object.querySelector(targetSelector)));
 }
 
 // ダッシュボードを読み込む
-loadDashboard(URL_ARRAY['base_html'], document.getElementsByTagName('main')[0]);
+loadDashboard();
 
 /**
  * 
