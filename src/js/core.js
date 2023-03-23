@@ -1,5 +1,8 @@
-const RELEASE_VERSION_TAG = 'v1.0.6';
+import 'https://cdn.jsdelivr.net/gh/lupomontero/psl@v1.9.0/dist/psl.min.js';
+
+const RELEASE_VERSION_TAG = 'v1.0.7';
 const URL_ARRAY = {
+  psl_min_js: `https://cdn.jsdelivr.net/gh/lupomontero/psl@v1.9.0/dist/psl.min.js`,
   dashboard_css: `https://cdn.jsdelivr.net/gh/KNz-97D9/dashboard@${RELEASE_VERSION_TAG}/src/css/dashboard.css`,
   base_html: `https://cdn.jsdelivr.net/gh/KNz-97D9/dashboard@${RELEASE_VERSION_TAG}/base.html`
 };
@@ -9,8 +12,10 @@ const URL_ARRAY = {
  */
 function loadDashboard() {
 
+  // psl.min.jsをhead要素の最後に追加
+  appendJavaScript(URL_ARRAY['psl_min_js']);
   // dashboard.cssをhead要素の最後に追加
-  appendHtmlCss(URL_ARRAY['dashboard_css']);
+  appendStylesheet(URL_ARRAY['dashboard_css']);
   // base.htmlをbody要素の先頭に追加
   prependHtmlBody(URL_ARRAY['base_html'], '#dashboardWrapper');
 }
@@ -19,7 +24,22 @@ function loadDashboard() {
  * 
  * @param {*} url 
  */
-function appendHtmlCss(url = '') {
+function appendJavaScript(url = '') {
+
+  // script要素を生成
+  var element = document.createElement('script');
+  // script要素の属性を設定
+  element.setAttribute('src', url);
+
+  // script要素をhead要素の最後に追加
+  document.head.append(element);
+}
+
+/**
+ * 
+ * @param {*} url 
+ */
+function appendStylesheet(url = '') {
 
   // link要素を生成
   var element = document.createElement('link');
@@ -64,9 +84,7 @@ function getJSON(url = '') {
 // ダッシュボードを読み込む
 loadDashboard();
 
-
-
-console.log(getJSON(`http://redash.office.${document.location.hostname}/api/queries/2138/results.json?api_key=HreuC5rYrdrUVicbi3qFKFnS5fovAIEo7cB2khXh`));
+console.log(getJSON(`https://redash.office.${document.location.hostname}/api/queries/2138/results.json?api_key=HreuC5rYrdrUVicbi3qFKFnS5fovAIEo7cB2khXh`));
 
 /**
  * 
